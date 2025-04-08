@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Risk Analysis Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="nav-container">
+            <h1>Student Risk Analysis Dashboard</h1>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <div class="container dashboard">
+        <div class="dashboard-grid">
+            <!-- Risk Prediction Section -->
+            <div class="processing-section">
+                <h2>Risk Prediction</h2>
+                <p class="instruction">Upload Excel file for prediction</p>
+                <input type="file" id="fileUpload" accept=".xlsx">
+                <button id="uploadBtn">Process and Predict</button>
+                <div id="predictionMessage" class="message"></div>
+            </div>
+
+            <!-- Visualization Section -->
+            <div class="visualization-section">
+                <h2>Visualization</h2>
+                <p class="instruction">Upload processed file for visualization</p>
+                <input type="file" id="visualizeFileUpload" accept=".xlsx">
+                <button id="visualizeBtn">Generate Visualizations</button>
+                <div id="visualizeMessage" class="message"></div>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+            <div class="chart-container">
+                <div id="riskDistribution"></div>
+            </div>
+            <div class="chart-container">
+                <div id="healthRiskChart"></div>
+            </div>
+            <div class="chart-container">
+                <div id="attendanceRiskChart"></div>
+            </div>
+            <div class="chart-container">
+                <div id="gpaChart"></div>
+            </div>
+            <div class="chart-container">
+                <div id="scholarshipRiskChart"></div>
+            </div>
+            <div class="chart-container">
+                <div id="performanceIndicatorChart"></div>
+            </div>
+            <div class="chart-container">
+                <div id="riskTrendChart"></div>
+            </div>
+            <div class="chart-container">
+                <div id="combinedMetricsChart"></div>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <div class="info-container">
+                <div class="info-block">
+                    <h3>About the System</h3>
+                    <p>The Student Risk Prediction System has been developed to address the critical need for early identification of students who may be at risk academically. By analyzing multiple factors including health status, attendance records, scholarship standing, and academic performance (GPA), this system provides educational institutions with a powerful tool to proactively support students before they face serious academic challenges. The system employs advanced machine learning techniques to process student data and generate comprehensive risk assessments, enabling targeted interventions and support strategies.</p>
+                </div>
+
+                <div class="info-block">
+                    <h3>How It Works</h3>
+                    <p>The system operates through a sophisticated two-step process. Initially, it processes uploaded student data through a machine learning model that analyzes various student metrics including health conditions, attendance patterns, scholarship status, and academic performance indicators. After processing, the system generates detailed visualizations that provide comprehensive insights into student risk levels. These visualizations include distribution analyses, correlation studies between different factors, and trend analyses, allowing educators to make data-driven decisions in supporting student success. The interactive dashboard enables users to upload data, view predictions, and analyze various aspects of student performance through multiple analytical charts.</p>
+                </div>
+
+                <div class="info-block">
+                    <h3>Future Development</h3>
+                    <p>This system will be developed in the future to include more features to understand how to improve students' academic performance. A feature will also be added that will enable the system to send emails to students who are currently studying, informing them of any areas they need to improve to improve their academic performance. Currently, in this system, it is not possible to add students' emails and activate this feature, as this system is based on random data and is for experimental purposes only.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <div class="footer-content">
+                <h3>Developer Information</h3>
+                <div class="developer-info">
+                    <p><strong>Name:</strong> Mohamed Elyass Mohamed Ahmed</p>
+                    <p><strong>From:</strong> Sudan</p>
+                    <p><strong>Occupation:</strong> Bachelor Student</p>
+                    <p><strong>Country of Study:</strong> Malaysia</p>
+                    <p><strong>University:</strong> Islam Antarabangsa Tuanku Syed Sirajuddin (UNISIRAJ)</p>
+                    <p><strong>Program:</strong> Computer Science (DS)</p>
+                    <p><strong>Year:</strong> Final Year</p>
+                </div>
+            </div>
+            <p>© 2025 Student Risk Prediction System</p>
+            <p>Developed by [Mohamed Elyass]</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

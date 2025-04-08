@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .user-table th, .user-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .user-table th {
+            background-color: #f4f4f4;
+        }
+        .user-count {
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .password-cell {
+            font-family: monospace;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Registered Users</h1>
+        <div class="user-count" id="userCount"></div>
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Password Hash</th>
+                </tr>
+            </thead>
+            <tbody id="userList">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Backend URL - change this to your deployed backend URL
+        const BACKEND_URL = 'http://localhost:5000'; // Change this to your Render URL when deploying
+        
+        async function loadUsers() {
+            try {
+                const response = await fetch(`${BACKEND_URL}/users`);
+                const data = await response.json();
+                
+                const userList = document.getElementById('userList');
+                const userCount = document.getElementById('userCount');
+                
+                userCount.textContent = `Total Users: ${data.total_users}`;
+                
+                userList.innerHTML = data.users.map(user => `
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td class="password-cell">${user.password_hash}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading users:', error);
+            }
+        }
+
+        // Load users when page loads
+        document.addEventListener('DOMContentLoaded', loadUsers);
+    </script>
+</body>
+</html>

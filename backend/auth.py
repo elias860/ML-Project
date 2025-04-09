@@ -7,7 +7,7 @@ import joblib
 import sklearn
 from sklearn import __version__ as sklearn_version
 from packaging import version
-from database import add_user, verify_user, init_db
+from backend.database import add_user, verify_user, init_db
 from dotenv import load_dotenv
 
 # Load environment variables

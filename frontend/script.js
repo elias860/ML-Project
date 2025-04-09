@@ -141,8 +141,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 if (data.status === "success") {
                     showMessage("File processed successfully! Ready for visualization.", "success", "predictionMessage");
-                    // Automatically trigger the download
-                    window.location.href = `${BACKEND_URL}/download`;
+                    // Trigger the download in a new window/tab to avoid navigation issues
+                    setTimeout(() => {
+                        // Create a hidden iframe for download to avoid page navigation
+                        const iframe = document.createElement('iframe');
+                        iframe.style.display = 'none';
+                        iframe.src = `${BACKEND_URL}/download`;
+                        document.body.appendChild(iframe);
+                        
+                        // Remove the iframe after download starts
+                        setTimeout(() => {
+                            document.body.removeChild(iframe);
+                        }, 2000);
+                    }, 1000);
                 } else {
                     throw new Error(data.message || "Error processing file");
                 }

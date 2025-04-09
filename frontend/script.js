@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Backend URL - change this to your deployed backend URL
-    const BACKEND_URL = 'http://localhost:5000'; // Change this to your Render URL when deploying
+    // Backend URL - using relative path to work with the deployed frontend
+    const BACKEND_URL = '/api'; // This will be proxied to the backend service
     
     // Get elements for file processing
     const uploadBtn = document.getElementById("uploadBtn");

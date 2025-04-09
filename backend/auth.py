@@ -29,7 +29,7 @@ if version.parse(current_version) != version.parse(required_version):
 
 # Paths
 db_path = os.getenv('DATABASE_URL', r'C:\Users\HP\Documents\Projects Data\ML Project\user_database.db')
-model_path = os.getenv('MODEL_PATH', r'C:\Users\HP\Documents\Projects Data\ML Project\tree_model.pkl')
+model_path = os.getenv('MODEL_PATH', os.path.join(os.path.dirname(__file__), 'tree_model.pkl'))
 output_path = os.path.join(os.getcwd(), 'student_risk_report.xlsx')
 expected_columns = ['health', 'attendance', 'scholarship', 'gpa1', 'gpa2', 'gpa3', 'cgpa']
 

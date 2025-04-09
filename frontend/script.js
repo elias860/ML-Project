@@ -141,7 +141,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 if (data.status === "success") {
                     showMessage("File processed successfully! Ready for visualization.", "success", "predictionMessage");
-                    localStorage.setItem('processedFileName', file.name);
+                    // Automatically trigger the download
+                    window.location.href = `${BACKEND_URL}/download`;
                 } else {
                     throw new Error(data.message || "Error processing file");
                 }

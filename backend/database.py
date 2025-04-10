@@ -1,8 +1,8 @@
-import sqlite3
 import os
 import hashlib
 import logging
 from dotenv import load_dotenv
+import psycopg2
 
 # Load environment variables
 load_dotenv()
@@ -19,27 +19,18 @@ if not os.path.isabs(db_path):
 
 def init_db():
     try:
-        # Create database directory if it doesn't exist
-        os.makedirs(os.path.dirname(db_path), exist_ok=True)
-        logger.info(f"Database directory created/verified at {os.path.dirname(db_path)}")
-
-        # Create database connection
-        conn = sqlite3.connect(db_path)
+        conn = psycopg2.connect(os.getenv('DATABASE_URL'))
         cursor = conn.cursor()
-
-        # Create users table
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
             username TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL
         )
         ''')
-
-        # Commit and close
         conn.commit()
         conn.close()
-        logger.info(f"Database and users table created successfully at {db_path}")
+        logger.info("Database and users table created successfully")
         return True
     except Exception as e:
         logger.error(f"Error initializing database: {str(e)}")
@@ -48,14 +39,14 @@ def init_db():
 def add_user(username, password):
     try:
         password_hash = hashlib.sha256(password.encode()).hexdigest()
-        conn = sqlite3.connect(db_path)
+        conn = psycopg2.connect(os.getenv('DATABASE_URL'))
         cursor = conn.cursor()
-        cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password_hash))
+        cursor.execute('INSERT INTO users (username, password) VALUES (%s, %s)', (username, password_hash))
         conn.commit()
         conn.close()
         logger.info(f"User {username} added successfully")
         return True
-    except sqlite3.IntegrityError:
+    except psycopg2.IntegrityError:
         logger.warning(f"Username {username} already exists")
         return False
     except Exception as e:
@@ -65,9 +56,9 @@ def add_user(username, password):
 def verify_user(username, password):
     try:
         password_hash = hashlib.sha256(password.encode()).hexdigest()
-        conn = sqlite3.connect(db_path)
+        conn = psycopg2.connect(os.getenv('DATABASE_URL'))
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM users WHERE username=? AND password=?', (username, password_hash))
+        cursor.execute('SELECT * FROM users WHERE username=%s AND password=%s', (username, password_hash))
         user = cursor.fetchone()
         conn.close()
         if user:

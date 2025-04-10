@@ -9,6 +9,9 @@ from sklearn import __version__ as sklearn_version
 from packaging import version
 from backend.database import add_user, verify_user, init_db
 from dotenv import load_dotenv
+import psycopg2
+import hashlib
+import logging
 
 # Load environment variables
 load_dotenv()
@@ -18,6 +21,20 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Initialize database
 init_db()
+
+# Connect to PostgreSQL
+conn = psycopg2.connect(os.getenv('DATABASE_URL'))
+cursor = conn.cursor()
+
+# Create users table
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
+)
+''')
+conn.commit()
 
 # Version check
 required_version = "1.3.0"
